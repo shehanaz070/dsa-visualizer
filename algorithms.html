@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Algorithm Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fef9ff, #e0f7ff);
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0a74da;
+      margin-bottom: 20px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #0a74da;
+      color: white;
+      cursor: pointer;
+    }
+    .tab-button:hover {
+      background-color: #064c96;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .algo-title {
+      text-align: center;
+      font-size: 24px;
+      margin: 20px 0;
+      color: #1a1a1a;
+    }
+    .step-box {
+      background: #e8f4fd;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 6px solid #0a74da;
+      font-size: 18px;
+      min-height: 120px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    button.control {
+      padding: 12px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #0a74da;
+      color: white;
+      cursor: pointer;
+    }
+    button.control:hover {
+      background-color: #094e99;
+    }
+    .code-block {
+      background: #000;
+      color: #0f0;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      border-radius: 10px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>📽️ Multi-Algorithm Visualizer</h1>
+  <div class="tabs">
+    <button class="tab-button" onclick="selectAlgorithm('bubble')">Bubble Sort</button>
+    <button class="tab-button" onclick="selectAlgorithm('insertion')">Insertion Sort</button>
+    <button class="tab-button" onclick="selectAlgorithm('selection')">Selection Sort</button>
+  </div>
+
+  <div class="container">
+    <div class="algo-title" id="algoTitle">Bubble Sort - Step-by-Step</div>
+    <div class="step-box" id="stepBox">Loading step...</div>
+
+    <div class="buttons">
+      <button class="control" onclick="prevStep()">⬅️ Previous</button>
+      <button class="control" onclick="nextStep()">➡️ Next</button>
+    </div>
+
+    <div class="code-block" id="codeBlock"></div>
+  </div>
+
+  <script>
+    const algorithms = {
+      bubble: {
+        title: "Bubble Sort - Step-by-Step",
+        steps: [
+          "Step 1️⃣: Start with the first element of the array.",
+          "Step 2️⃣: Compare it with the next element.",
+          "Step 3️⃣: If the current element is greater, swap them.",
+          "Step 4️⃣: Move to the next pair and repeat until end.",
+          "Step 5️⃣: After first pass, largest element is at the end.",
+          "Step 6️⃣: Repeat the process for remaining elements.",
+          "Step 7️⃣: Continue until no swaps are needed — array is sorted!",
+          "✅ Bubble Sort complete! 🎉"
+        ],
+        code: `for i from 0 to n-1
+  for j from 0 to n-i-1
+    if arr[j] > arr[j+1]
+      swap arr[j] and arr[j+1]`
+      },
+      insertion: {
+        title: "Insertion Sort - Step-by-Step",
+        steps: [
+          "Step 1️⃣: Start from the second element (index 1).",
+          "Step 2️⃣: Compare it with elements before it.",
+          "Step 3️⃣: Move the larger elements one position ahead.",
+          "Step 4️⃣: Insert the current element at the correct spot.",
+          "Step 5️⃣: Repeat for all elements until array is sorted.",
+          "✅ Insertion Sort complete! 🎉"
+        ],
+        code: `for i from 1 to n-1
+  key = arr[i]
+  j = i - 1
+  while j >= 0 and arr[j] > key
+    arr[j + 1] = arr[j]
+    j = j - 1
+  arr[j + 1] = key`
+      },
+      selection: {
+        title: "Selection Sort - Step-by-Step",
+        steps: [
+          "Step 1️⃣: Start from the first element.",
+          "Step 2️⃣: Find the minimum element in the unsorted part.",
+          "Step 3️⃣: Swap it with the first element of unsorted part.",
+          "Step 4️⃣: Move the boundary of sorted part one element forward.",
+          "Step 5️⃣: Repeat until the entire array is sorted.",
+          "✅ Selection Sort complete! 🎉"
+        ],
+        code: `for i from 0 to n-1
+  min_idx = i
+  for j from i+1 to n
+    if arr[j] < arr[min_idx]
+      min_idx = j
+  swap arr[i] and arr[min_idx]`
+      }
+    };
+
+    let currentAlgo = 'bubble';
+    let currentStep = 0;
+
+    function showStep() {
+      const algo = algorithms[currentAlgo];
+      document.getElementById('algoTitle').innerText = algo.title;
+      document.getElementById('stepBox').innerText = algo.steps[currentStep];
+      document.getElementById('codeBlock').innerText = algo.code;
+    }
+
+    function nextStep() {
+      const algo = algorithms[currentAlgo];
+      if (currentStep < algo.steps.length - 1) {
+        currentStep++;
+        showStep();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep();
+      }
+    }
+
+    function selectAlgorithm(algoName) {
+      currentAlgo = algoName;
+      currentStep = 0;
+      showStep();
+    }
+
+    showStep();
+  </script>
+</body>
+</html>
