@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphs Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f3e5f5);
+      margin: 0; padding: 0;
+      text-align: center;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #26a69a, #7e57c2);
+      color: white;
+      padding: 1.2rem;
+      font-size: 2rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    h2 {
+      color: #4a148c;
+    }
+    .description {
+      background: #fff3e0;
+      border-left: 6px solid #ffb74d;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      text-align: left;
+    }
+    input {
+      padding: 8px;
+      margin: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background: #7e57c2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      background: #ede7f6;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>📊 Graphs Visualizer</header>
+
+  <div class="container">
+    <h2>What is a Graph?</h2>
+    <div class="description">
+      A graph is a collection of nodes (vertices) connected by edges. It can be directed or undirected, weighted or unweighted.
+    </div>
+
+    <h2>Graph Traversals</h2>
+    <div class="description">
+      <strong>BFS (Breadth-First Search)</strong>: Visits nodes level by level using a queue.<br/>
+      <strong>DFS (Depth-First Search)</strong>: Explores as far as possible along each branch using recursion or stack.
+    </div>
+
+    <h3>Example Graph</h3>
+    <pre>
+      A
+     / \
+    B   C
+   /     \
+  D       E
+    </pre>
+
+    <input type="text" id="startNode" placeholder="Enter Start Node (e.g. A)" />
+    <button onclick="visualizeBFS()">Visualize BFS</button>
+    <button onclick="visualizeDFS()">Visualize DFS</button>
+
+    <div class="output" id="outputBox"></div>
+  </div>
+
+  <script>
+    const graph = {
+      A: ['B', 'C'],
+      B: ['A', 'D'],
+      C: ['A', 'E'],
+      D: ['B'],
+      E: ['C']
+    };
+
+    function visualizeBFS() {
+      const start = document.getElementById('startNode').value.toUpperCase();
+      if (!graph[start]) return alert('Invalid start node!');
+
+      const visited = new Set();
+      const queue = [start];
+      const result = [];
+
+      while (queue.length) {
+        const node = queue.shift();
+        if (!visited.has(node)) {
+          visited.add(node);
+          result.push(node);
+          queue.push(...graph[node]);
+        }
+      }
+      document.getElementById('outputBox').innerText = "BFS Order: " + result.join(' → ');
+    }
+
+    function visualizeDFS() {
+      const start = document.getElementById('startNode').value.toUpperCase();
+      if (!graph[start]) return alert('Invalid start node!');
+
+      const visited = new Set();
+      const result = [];
+
+      function dfs(node) {
+        if (!node || visited.has(node)) return;
+        visited.add(node);
+        result.push(node);
+        for (const neighbor of graph[node]) {
+          dfs(neighbor);
+        }
+      }
+
+      dfs(start);
+      document.getElementById('outputBox').innerText = "DFS Order: " + result.join(' → ');
+    }
+  </script>
+</body>
+</html>
