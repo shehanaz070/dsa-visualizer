@@ -1,219 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DSA Explorer</title>
+  <meta charset="UTF-8">
+  <title>DSA Visualizer</title>
   <style>
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-  }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fc;
+      color: #333;
+    }
 
-  header {
-    background-color: #1e3a8a;
-    color: white;
-    padding: 16px 0;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
 
-  main {
-    width: 90%;
-    max-width: 1100px;
-    margin: 30px auto;
-  }
+    main {
+      width: 95%;
+      max-width: 1100px;
+      margin: 30px auto;
+    }
 
-  .page {
-    display: none;
-    animation: fadeIn 0.5s ease forwards;
-  }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
 
-  .page.active {
-    display: block;
-  }
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Category Button */
-  .category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  justify-items: center;
-  margin-top: 30px;
-}
-
-.category-btn {
-  background-color: #ffffff;
-  color: #1e3a8a;
-  padding: 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 180px;
-  height: 150px;
-  user-select: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border: none;
-}
-
-.category-btn:hover {
-  background-color: #e0e7ff;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
-}
-
-  .back-btn {
-    margin-top: 30px;
-    background-color: #1e3a8a;
-    color: #fff;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: background-color 0.3s ease;
-  }
-
-  .back-btn:hover {
-    background-color: #3742fa;
-  }
+    .card:hover {
+      background-color: #e0ebff;
+      transform: translateY(-6px);
+      box-shadow: 0 10px 18px rgba(30, 58, 138, 0.2);
+    }
   </style>
 </head>
 <body>
 
-  <header>📚 DSA Explorer</header>
+  <header>📘 DSA Visualizer</header>
 
   <main>
-    <!-- Landing Page -->
-    <section id="landing" class="page active">
-      <div class="category-grid">
-        <button class="category-btn" onclick="openPage('dataStructures')">
-          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
-          Data Structures
-        </button>
-        <button class="category-btn" onclick="openPage('algorithms')">
-          <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/></svg>
-          Algorithms
-        </button>
-        <button class="category-btn" onclick="openPage('searching')">
-          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/></svg>
-          Searching Techniques
-        </button>
-        <button class="category-btn" onclick="openPage('sorting')">
-          <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zm0-5h12v-2H3v2zm0-7v2h18V6H3z"/></svg>
-          Sorting Techniques
-        </button>
-        <button class="category-btn" onclick="openPage('problemSolver')">
-          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
-          Problem Solver
-        </button>
-      </div>
-    </section>
+    <h2 style="text-align:center;">Choose a Topic</h2>
 
-    <!-- Data Structures Page -->
-    <section id="dataStructures" class="page">
-      <h2>📦 Data Structures</h2>
-      <div class="cards-grid">
-        <a href="stack.html" class="card">
-          <svg viewBox="0 0 4 4"><path d="M6 2h12v2H6zM6 6h12v2H6zM6 10h12v2H6zM6 14h12v2H6zM6 18h12v2H6z"/></svg>
-          Stack
-        </a>
-        <a href="queue.html" class="card">
-          <svg viewBox="0 0 24 24"><path d="M5 6h14v2H5zM5 10h14v2H5zM5 14h14v2H5z"/></svg>
-          Queue
-        </a>
-        <a href="linkedlist.html" class="card">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14v2H5zM5 16h14v2H5zM5 8h14v2H5z"/></svg>
-          Linked List
-        </a>
-        <a href="trees.html" class="card">
-          <svg viewBox="0 0 24 24"><path d="M7 7v10h2V7zM11 5v12h2V5zM15 8v9h2v-9z"/></svg>
-          Trees
-        </a>
-        <a href="graphs.html" class="card">
-          <svg viewBox="0 0 24 24"><path d="M6 10h12v2H6zM6 14h12v2H6zM6 18h12v2H6z"/></svg>
-          Graphs
-        </a>
-        <a href="hashtables.html" class="card">
-          <svg viewBox="0 0 24 24"><path d="M4 7h16v2H4zM4 11h16v2H4zM4 15h16v2H4z"/></svg>
-          Hash Tables
-        </a>
-      </div>
-      <button class="back-btn" onclick="openPage('landing')">← Back to Categories</button>
-    </section>
-
-    <!-- Algorithms Page -->
-    <section id="algorithms" class="page">
-      <h2>🧠 Algorithms</h2>
-      <p>
-       <h3> <a href="algorithm.html" style="color:#6a11cb; font-weight:600; text-decoration:none;">Click Here---> View Algorithm Steps & Visuals</a></h3>
-      </p>
-      <button class="back-btn" onclick="openPage('landing')">← Back to Categories</button>
-    </section>
-
-    <!-- Searching Techniques Page -->
-    <section id="searching" class="page">
-      <h2>🔍 Searching Techniques</h2>
-      <div class="cards-grid">
-        <a href="linearsearch.html" class="card">
-          Linear Search
-        </a>
-        <a href="binarysearch.html" class="card">
-          Binary Search
-        </a>
-      </div>
-      <button class="back-btn" onclick="openPage('landing')">← Back to Categories</button>
-    </section>
-
-    <!-- Sorting Techniques Page -->
-    <section id="sorting" class="page">
-      <h2>🔄 Sorting Techniques</h2>
-      <div class="cards-grid">
-        <a href="bubble_sort.html" class="card">
-          Bubble Sort
-        </a>
-        <a href="insertion_sort.html" class="card">
-          Insertion Sort
-        </a>
-        <a href="selection_sort.html" class="card">
-          Selection Sort
-        </a>
-      </div>
-      <button class="back-btn" onclick="openPage('landing')">← Back to Categories</button>
-    </section>
-
-    <!-- Problem Solver Page -->
-    <section id="problemSolver" class="page">
-      <h2>🧩 DSA Problem Solver</h2>
-      <p>
-        <a href="problemsolver.html" style="color:#6a11cb; font-weight:600; text-decoration:none;">Open Problem Solver</a>
-      </p>
-      <button class="back-btn" onclick="openPage('landing')">← Back to Categories</button>
-    </section>
-
+    <div class="card-grid">
+      <a href="stack.html" class="card">📚 Stack</a>
+      <a href="queue.html" class="card">📥 Queue</a>
+      <a href="linkedlist.html" class="card">🔗 Linked List</a>
+      <a href="trees.html" class="card">🌳 Trees</a>
+      <a href="graphs.html" class="card">🌐 Graphs</a>
+      <a href="hashtables.html" class="card">🔒 Hash Tables</a>
+      <a href="linearsearch.html" class="card">🔍 Linear Search</a>
+      <a href="binarysearch.html" class="card">🔎 Binary Search</a>
+      <a href="bubblesort.html" class="card">🫧 Bubble Sort</a>
+      <a href="insertionsort.html" class="card">📌 Insertion Sort</a>
+      <a href="selectionsort.html" class="card">✅ Selection Sort</a>
+      <a href="algorithm.html" class="card">🧠 Algorithms</a>
+      <a href="problemsolver.html" class="card">💡 Problem Solver</a>
+    </div>
   </main>
-
   <script>
     function openPage(id) {
       document.querySelectorAll('.page').forEach(page => {
