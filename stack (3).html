@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stack Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f0ff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      background: linear-gradient(to right, #8e44ad, #6c5ce7);
+      color: white;
+      margin: 0;
+      padding: 1rem;
+      font-size: 2rem;
+    }
+    .tabs {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
+    .tab {
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+      background-color: #dcd3f8;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .tab.active {
+      background-color: #8e44ad;
+      color: white;
+    }
+    .visualizer {
+      display: none;
+    }
+    .visualizer.active {
+      display: block;
+      margin-top: 20px;
+    }
+    .info-text {
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      background: #ede4fb;
+      padding: 15px;
+      border-left: 5px solid #8e44ad;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-align: left;
+    }
+    input[type="number"] {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      background-color: #8e44ad;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6c5ce7;
+    }
+    .stack-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      min-height: 200px;
+    }
+    .stack-box {
+      width: 120px;
+      height: 40px;
+      background-color: #dcd3f8;
+      border: 2px solid #8e44ad;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📦 Stack Visualizer</h1>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('array')">Using Array</div>
+    <div class="tab" onclick="switchTab('linked')">Using Linked List</div>
+  </div>
+
+  <!-- Array Stack Visualizer -->
+  <div id="array" class="visualizer active">
+    <div class="info-text">
+      <strong>Stack using Array:</strong> A stack is a linear data structure following the <em>LIFO (Last In First Out)</em> principle.
+      In this version, elements are added and removed from the top of a list-like array.
+      <br><br>Common operations: <strong>Push</strong> (insert), <strong>Pop</strong> (remove), <strong>Display</strong> (view contents).
+    </div>
+    <input type="number" id="arrayInput" placeholder="Enter value" />
+    <button onclick="pushArray()">Push</button>
+    <button onclick="popArray()">Pop</button>
+    <button onclick="displayArray()">Display</button>
+    <div class="stack-container" id="arrayStack"></div>
+  </div>
+
+  <!-- Linked List Stack Visualizer -->
+  <div id="linked" class="visualizer">
+    <div class="info-text">
+      <strong>Stack using Linked List:</strong> This stack is implemented using nodes. Each node contains data and a pointer to the next node.
+      The top of the stack points to the most recently added node.
+      <br><br>It's dynamic and doesn’t require resizing like arrays. Operates on <em>LIFO</em> principle.
+    </div>
+    <input type="number" id="linkedInput" placeholder="Enter value" />
+    <button onclick="pushLinked()">Push</button>
+    <button onclick="popLinked()">Pop</button>
+    <button onclick="displayLinked()">Display</button>
+    <div class="stack-container" id="linkedStack"></div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.visualizer').forEach(v => v.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      document.querySelector('.tab[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
+    }
+
+    let arrayStack = [];
+
+    function pushArray() {
+      const input = document.getElementById('arrayInput');
+      if (input.value !== '') {
+        arrayStack.push(input.value);
+        input.value = '';
+        displayArray();
+      }
+    }
+
+    function popArray() {
+      arrayStack.pop();
+      displayArray();
+    }
+
+    function displayArray() {
+      const container = document.getElementById('arrayStack');
+      container.innerHTML = '';
+      for (let i = 0; i < arrayStack.length; i++) {
+        const box = document.createElement('div');
+        box.className = 'stack-box';
+        box.textContent = arrayStack[i];
+        container.appendChild(box);
+      }
+    }
+
+    let linkedStack = null;
+
+    function pushLinked() {
+      const input = document.getElementById('linkedInput');
+      if (input.value !== '') {
+        linkedStack = { value: input.value, next: linkedStack };
+        input.value = '';
+        displayLinked();
+      }
+    }
+
+    function popLinked() {
+      if (linkedStack) {
+        linkedStack = linkedStack.next;
+        displayLinked();
+      }
+    }
+
+    function displayLinked() {
+      const container = document.getElementById('linkedStack');
+      container.innerHTML = '';
+      let current = linkedStack;
+      while (current) {
+        const box = document.createElement('div');
+        box.className = 'stack-box';
+        box.textContent = current.value;
+        container.appendChild(box);
+        current = current.next;
+      }
+    }
+  </script>
+</body>
+</html>
