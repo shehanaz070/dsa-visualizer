@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linked List Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fce4ec, #e0f7fa, #f5f5f5);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #ff6ec4, #7873f5);
+      color: white;
+      padding: 1.2rem;
+      font-size: 2rem;
+    }
+    h2 {
+      margin-top: 20px;
+      color: #333;
+    }
+    .container {
+      margin: 30px auto;
+      max-width: 900px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .linkedlist-box {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .node {
+      background-color: #81ecec;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: #2d3436;
+      font-weight: bold;
+      position: relative;
+      min-width: 70px;
+      text-align: center;
+    }
+    .node::after {
+      content: "→";
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      color: #636e72;
+    }
+    .node:last-child::after {
+      content: "";
+    }
+    button {
+      padding: 10px 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #a29bfe;
+      color: white;
+    }
+    input {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin: 0 8px;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
+    .description {
+      background: #f3e5f5;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 700px;
+      border-radius: 8px;
+      border-left: 6px solid #a29bfe;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
 
+  <header>🔗 Linked List Visualizer</header>
+
+  <div class="container">
+    <div class="description">
+      <strong>Linked List:</strong> A linear data structure where each element points to the next using a pointer. Useful for dynamic memory allocation and insertion/deletion operations.
+    </div>
+
+    <input type="number" id="llVal" placeholder="Enter value" />
+    <button onclick="insertNode()">Insert</button>
+    <button onclick="deleteNode()">Delete</button>
+    <div class="linkedlist-box" id="linkedListBox"></div>
+  </div>
+
+  <script>
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.next = null;
+      }
+    }
+
+    class LinkedList {
+      constructor() {
+        this.head = null;
+      }
+
+      insert(value) {
+        const newNode = new Node(value);
+        if (!this.head) {
+          this.head = newNode;
+        } else {
+          let current = this.head;
+          while (current.next) {
+            current = current.next;
+          }
+          current.next = newNode;
+        }
+      }
+
+      delete() {
+        if (this.head) {
+          this.head = this.head.next;
+        }
+      }
+
+      getElements() {
+        let result = [];
+        let current = this.head;
+        while (current) {
+          result.push(current.value);
+          current = current.next;
+        }
+        return result;
+      }
+    }
+
+    const linkedList = new LinkedList();
+
+    function insertNode() {
+      const val = document.getElementById("llVal").value;
+      if (val === "") return;
+      linkedList.insert(val);
+      document.getElementById("llVal").value = "";
+      renderLinkedList();
+    }
+
+    function deleteNode() {
+      linkedList.delete();
+      renderLinkedList();
+    }
+
+    function renderLinkedList() {
+      const box = document.getElementById("linkedListBox");
+      box.innerHTML = "";
+      linkedList.getElements().forEach(val => {
+        const div = document.createElement("div");
+        div.className = "node";
+        div.textContent = val;
+        box.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
