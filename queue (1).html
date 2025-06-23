@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queue Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #fce4ec, #e3f2fd, #f5f5f5);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      padding: 1.2rem;
+      font-size: 2rem;
+    }
+    h2 {
+      margin-top: 20px;
+      color: #333;
+    }
+    .container {
+      margin: 30px auto;
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .queue-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .queue-element {
+      background-color: #a29bfe;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    button {
+      padding: 10px 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #6c5ce7;
+      color: white;
+    }
+    input {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin: 0 8px;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
+    .description {
+      background: #fce4ec;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 700px;
+      border-radius: 8px;
+      border-left: 6px solid #6c5ce7;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <header>📬 Queue Visualizer</header>
+
+  <div class="container">
+
+    <section class="section">
+      <h2>Using Array</h2>
+      <div class="description">
+        <strong>FIFO Principle:</strong> Queue using arrays follows First-In-First-Out. The first element added will be the first one removed.
+      </div>
+      <input type="number" id="arrayInput" placeholder="Enter value">
+      <button onclick="enqueueArray()">Enqueue</button>
+      <button onclick="dequeueArray()">Dequeue</button>
+      <div class="queue-box" id="arrayQueue"></div>
+    </section>
+
+    <section class="section">
+      <h2>Using Linked List</h2>
+      <div class="description">
+        <strong>Node-based Structure:</strong> Queue using linked list dynamically allocates memory using nodes and pointers.
+      </div>
+      <input type="number" id="llInput" placeholder="Enter value">
+      <button onclick="enqueueLL()">Enqueue</button>
+      <button onclick="dequeueLL()">Dequeue</button>
+      <div class="queue-box" id="linkedListQueue"></div>
+    </section>
+
+  </div>
+
+  <script>
+    // Queue using Array
+    let arrayQueue = [];
+
+    function enqueueArray() {
+      const val = document.getElementById("arrayInput").value;
+      if (val === "") return;
+      arrayQueue.push(val);
+      document.getElementById("arrayInput").value = "";
+      renderArrayQueue();
+    }
+
+    function dequeueArray() {
+      arrayQueue.shift();
+      renderArrayQueue();
+    }
+
+    function renderArrayQueue() {
+      const box = document.getElementById("arrayQueue");
+      box.innerHTML = "";
+      arrayQueue.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "queue-element";
+        div.textContent = item;
+        box.appendChild(div);
+      });
+    }
+
+    // Queue using Linked List
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.next = null;
+      }
+    }
+
+    class LinkedListQueue {
+      constructor() {
+        this.front = null;
+        this.rear = null;
+      }
+
+      enqueue(value) {
+        const newNode = new Node(value);
+        if (!this.front) {
+          this.front = this.rear = newNode;
+        } else {
+          this.rear.next = newNode;
+          this.rear = newNode;
+        }
+      }
+
+      dequeue() {
+        if (!this.front) return;
+        this.front = this.front.next;
+        if (!this.front) this.rear = null;
+      }
+
+      getElements() {
+        let elements = [];
+        let current = this.front;
+        while (current) {
+          elements.push(current.value);
+          current = current.next;
+        }
+        return elements;
+      }
+    }
+
+    const llQueue = new LinkedListQueue();
+
+    function enqueueLL() {
+      const val = document.getElementById("llInput").value;
+      if (val === "") return;
+      llQueue.enqueue(val);
+      document.getElementById("llInput").value = "";
+      renderLLQueue();
+    }
+
+    function dequeueLL() {
+      llQueue.dequeue();
+      renderLLQueue();
+    }
+
+    function renderLLQueue() {
+      const box = document.getElementById("linkedListQueue");
+      box.innerHTML = "";
+      llQueue.getElements().forEach(item => {
+        const div = document.createElement("div");
+        div.className = "queue-element";
+        div.textContent = item;
+        box.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
