@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tree Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fce4ec, #e3f2fd);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #ab47bc, #42a5f5);
+      color: white;
+      padding: 1.2rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    h2 {
+      color: #6a1b9a;
+      margin-top: 30px;
+    }
+    .box {
+      background: #fffde7;
+      border-left: 6px solid #ffca28;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+    pre {
+      background: #e1f5fe;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      overflow-x: auto;
+    }
+    .tree-diagram {
+      margin: 20px auto;
+      max-width: 300px;
+      text-align: center;
+      background: #ede7f6;
+      padding: 15px;
+      border-radius: 10px;
+      animation: slideIn 1s ease-in-out;
+    }
+    @keyframes slideIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    ul.tree, ul.tree ul {
+      list-style-type: none;
+      position: relative;
+      padding-left: 1em;
+    }
+    ul.tree::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 2px solid #9c27b0;
+      bottom: 0;
+    }
+    ul.tree li {
+      margin: 0.5em 0;
+      padding-left: 1.5em;
+      position: relative;
+    }
+    ul.tree li::before {
+      content: "";
+      position: absolute;
+      top: 0.75em;
+      left: 0;
+      width: 1em;
+      height: 0;
+      border-top: 2px solid #9c27b0;
+    }
+    button {
+      margin-top: 10px;
+      background-color: #7e57c2;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🌳 Tree Data Structures</header>
+
+  <div class="container">
+    <h2>What is a Tree?</h2>
+    <div class="box">
+      A tree is a hierarchical data structure consisting of nodes, with a single root node and potentially many levels of additional nodes.
+    </div>
+
+    <h2>Types of Trees</h2>
+    <div class="box">
+      <strong>Binary Tree:</strong> Each node has at most 2 children.<br>
+      <strong>Binary Search Tree (BST):</strong> Left < Root < Right<br>
+      <strong>AVL Tree:</strong> Self-balancing BST<br>
+      <strong>Red-Black Tree:</strong> Balanced BST with coloring rules<br>
+      <strong>Complete / Full / Perfect Binary Tree</strong><br>
+      <strong>Trie:</strong> Tree used to store strings (prefix tree)
+    </div>
+
+    <h2>Visual Example</h2>
+    <div class="tree-diagram">
+      <ul class="tree">
+        <li>8
+          <ul>
+            <li>3
+              <ul>
+                <li>1</li>
+                <li>6</li>
+              </ul>
+            </li>
+            <li>10
+              <ul>
+                <li>14</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h2>Traversals</h2>
+    <div class="box">
+      <strong>Inorder (LNR):</strong> Left → Node → Right<br>
+      <strong>Preorder (NLR):</strong> Node → Left → Right<br>
+      <strong>Postorder (LRN):</strong> Left → Right → Node
+    </div>
+
+    <pre>
+# Inorder Traversal in Python
+def inorder(node):
+    if node:
+        inorder(node.left)
+        print(node.data)
+        inorder(node.right)
+    </pre>
+
+    <button onclick="alert('Interactive traversal coming soon!')">Try Inorder Traversal</button>
+  </div>
+
+</body>
+</html>
