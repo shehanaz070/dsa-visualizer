@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selection Sort Visualizer</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #e3f2fd; padding: 30px; }
+    h1 { text-align: center; color: #1976d2; }
+    .input-section { text-align: center; margin: 20px 0; }
+    input { padding: 10px; margin: 5px; border-radius: 8px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; border-radius: 8px; background-color: #2196f3; color: white; border: none; cursor: pointer; }
+    .array-box { display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+    .element { width: 50px; height: 50px; background: #ffffff; border: 2px solid #1976d2; margin: 5px; text-align: center; line-height: 50px; font-weight: bold; border-radius: 10px; transition: 0.3s; }
+    .highlight { background-color: #ffeb3b; transform: scale(1.1); }
+    .swapped { background-color: #4caf50; color: white; }
+  </style>
+</head>
+<body>
+  <h1>🔘 Selection Sort Visualizer</h1>
+  <div class="input-section">
+    <input type="text" id="arrayInput" placeholder="Enter numbers e.g. 5,3,8">
+    <button onclick="startSelectionSort()">Sort</button>
+  </div>
+  <div class="array-box" id="arrayBox"></div>
+  <script>
+    async function startSelectionSort() {
+      const arrayBox = document.getElementById("arrayBox");
+      arrayBox.innerHTML = "";
+      const arr = document.getElementById("arrayInput").value.split(",").map(Number);
+      arr.forEach((num, idx) => {
+        const div = document.createElement("div");
+        div.className = "element";
+        div.innerText = num;
+        div.id = "el" + idx;
+        arrayBox.appendChild(div);
+      });
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length - i - 1; j++) {
+          let el1 = document.getElementById("el" + j);
+          let el2 = document.getElementById("el" + (j+1));
+          el1.classList.add("highlight");
+          el2.classList.add("highlight");
+          await new Promise(r => setTimeout(r, 700));
+          if (arr[j] > arr[j+1]) {
+            [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+            el1.innerText = arr[j];
+            el2.innerText = arr[j+1];
+            el1.classList.add("swapped");
+            el2.classList.add("swapped");
+          }
+          el1.classList.remove("highlight");
+          el2.classList.remove("highlight");
+        }
+      }
+    }
+  </script>
+</body>
+</html>
