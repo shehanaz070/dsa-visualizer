@@ -5,136 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DSA Explorer</title>
   <style>
-    /* Reset */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background: #f0f4f8;
-      color: #222;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header {
-      background: linear-gradient(90deg, #6a11cb, #2575fc);
-      color: white;
-      width: 100%;
-      text-align: center;
-      padding: 1.8rem 0;
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      user-select: none;
-    }
-    main {
-      width: 90%;
-      max-width: 960px;
-      margin-top: 30px;
-      flex-grow: 1;
-    }
-    .page {
-      display: none;
-      animation: fadeIn 0.5s ease forwards;
-    }
-    .page.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    /* Landing Page Buttons */
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-      gap: 25px;
-      margin-top: 20px;
-    }
-    .category-btn {
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: white;
-      padding: 45px 20px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      border-radius: 14px;
-      cursor: pointer;
-      text-align: center;
-      user-select: none;
-      box-shadow: 0 7px 20px rgba(71, 49, 189, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border: none;
-    }
-    .category-btn:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(71, 49, 189, 0.75);
-    }
-    .category-btn svg {
-      width: 55px;
-      height: 55px;
-      margin-bottom: 15px;
-      fill: #e0e7ff;
-    }
-    /* Cards Grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-      gap: 22px;
-      margin-top: 30px;
-    }
-    a.card {
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 5px 14px rgba(0,0,0,0.12);
-      padding: 30px 20px;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      text-decoration: none;
-      color: #222;
-      font-weight: 600;
-      font-size: 1.1rem;
-      letter-spacing: 0.05em;
-    }
-    a.card:hover {
-      box-shadow: 0 12px 30px rgba(102, 51, 204, 0.3);
-      transform: translateY(-7px);
-      color: #4b00b5;
-    }
-    a.card svg {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 18px;
-      fill: #6a11cb;
-      filter: drop-shadow(0 0 2px #a28cff);
-    }
-    /* Back Button */
-    .back-btn {
-      margin-top: 40px;
-      background: #6a11cb;
-      color: #e0e7ff;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 5px 15px rgba(71, 49, 189, 0.6);
-      transition: background-color 0.3s ease;
-    }
-    .back-btn:hover {
-      background: #4527a0;
-    }
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  header {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 16px 0;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+  }
+
+  .page {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Category Button */
+  .category-btn {
+    background-color: #ffffff;
+    color: #1e3a8a;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+  }
+
+  .category-btn:hover {
+    background-color: #e0e7ff;
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
+  }
+
+  .category-btn svg {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 12px;
+    fill: #1e3a8a;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+  }
+
+  .back-btn {
+    margin-top: 30px;
+    background-color: #1e3a8a;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #3742fa;
+  }
   </style>
 </head>
 <body>
