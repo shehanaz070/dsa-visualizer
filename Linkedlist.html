@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📦 Data Structures</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9ff;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 2.2rem;
+      color: #fff;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      width: 260px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      background-color: #f0f9ff;
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      margin: 10px 0;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    .back {
+      display: block;
+      margin: 30px auto;
+      background: #74ebd5;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .back:hover {
+      background: #52c8f0;
+    }
+  </style>
+</head>
+<body>
+  <header>📦 Data Structures</header>  <div class="container">
+    <div class="card" onclick="location.href='stack.html'">
+      <h3>📚 Stack</h3>
+      <p>Using Array & Linked List (Push, Pop, Display)</p>
+    </div><div class="card" onclick="location.href='queue.html'">
+  <h3>📥 Queue</h3>
+  <p>Using Array & Linked List (Enqueue, Dequeue)</p>
+</div>
+
+<div class="card" onclick="location.href='linkedlistops.html'">
+  <h3>🔗 Linked List</h3>
+  <p>Insert, Delete, Display with visualization</p>
+</div>
+
+<div class="card" onclick="location.href='trees.html'">
+  <h3>🌳 Trees</h3>
+  <p>Tree types, operations and visual flow</p>
+</div>
+
+<div class="card" onclick="location.href='graphs.html'">
+  <h3>🌐 Graphs</h3>
+  <p>Undirected & Directed with BFS/DFS basics</p>
+</div>
+
+<div class="card" onclick="location.href='hashtables.html'">
+  <h3>#️⃣ Hash Tables</h3>
+  <p>Hashing concepts with key-value mapping</p>
+</div>
+
+  </div><a href="index.html" class="back">⬅️ Back to Home</a>
+
+</body>
+</html>
