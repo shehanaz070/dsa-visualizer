@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hash Tables - DSA Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0faff;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
 
+    h1 {
+      text-align: center;
+      color: #0066cc;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 15px;
+      background: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .hash-table {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .cell {
+      border: 2px solid #00aaff;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 60px;
+      text-align: center;
+      background: #e6f7ff;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .cell:hover {
+      transform: scale(1.05);
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #00aaff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Hash Tables Visualizer</h1>
+  <div class="container">
+    <div class="section">
+      <h2>What is a Hash Table?</h2>
+      <p>A Hash Table is a data structure that stores key-value pairs. It uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.</p>
+    </div>
+
+    <div class="section">
+      <input type="text" id="keyInput" placeholder="Enter key">
+      <input type="text" id="valueInput" placeholder="Enter value">
+      <button onclick="insert()">Insert</button>
+      <button onclick="search()">Search</button>
+      <button onclick="remove()">Delete</button>
+    </div>
+
+    <div class="section">
+      <h3>Hash Table</h3>
+      <div id="hashTable" class="hash-table"></div>
+    </div>
+  </div>
+
+  <script>
+    const tableSize = 9;
+    const table = new Array(tableSize).fill(null);
+
+    const hashTableDiv = document.getElementById("hashTable");
+
+    function hash(key) {
+      let hashValue = 0;
+      for (let i = 0; i < key.length; i++) {
+        hashValue += key.charCodeAt(i);
+      }
+      return hashValue % tableSize;
+    }
+
+    function renderTable() {
+      hashTableDiv.innerHTML = "";
+      table.forEach((item, index) => {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.innerHTML = `<strong>${index}</strong><br>${item ? `${item.key}: ${item.value}` : "Empty"}`;
+        hashTableDiv.appendChild(cell);
+      });
+    }
+
+    function insert() {
+      const key = document.getElementById("keyInput").value;
+      const value = document.getElementById("valueInput").value;
+      if (!key || !value) return alert("Enter both key and value");
+
+      let index = hash(key);
+      let startIndex = index;
+      while (table[index] && table[index].key !== key) {
+        index = (index + 1) % tableSize;
+        if (index === startIndex) {
+          alert("Hash Table is full!");
+          return;
+        }
+      }
+
+      table[index] = { key, value };
+      renderTable();
+    }
+
+    function search() {
+      const key = document.getElementById("keyInput").value;
+      if (!key) return alert("Enter a key to search");
+
+      let index = hash(key);
+      let startIndex = index;
+      while (table[index]) {
+        if (table[index].key === key) {
+          alert(`Found: ${table[index].value} at index ${index}`);
+          return;
+        }
+        index = (index + 1) % tableSize;
+        if (index === startIndex) break;
+      }
+      alert("Key not found.");
+    }
+
+    function remove() {
+      const key = document.getElementById("keyInput").value;
+      if (!key) return alert("Enter a key to delete");
+
+      let index = hash(key);
+      let startIndex = index;
+      while (table[index]) {
+        if (table[index].key === key) {
+          table[index] = null;
+          alert("Key deleted!");
+          renderTable();
+          return;
+        }
+        index = (index + 1) % tableSize;
+        if (index === startIndex) break;
+      }
+      alert("Key not found.");
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
